@@ -14,9 +14,12 @@ public class Main {
         long accountnumber= sc.nextLong();
         if(user1.checkbankaccount(accountnumber)){
             Bankaccount user= user1.getBankaccount(accountnumber);
-            System.out.println("Welcome "+user.getBankaccountnumber()+"enter bank password");
+            System.out.println("Welcome "+user.getBankaccountnumber()+"   enter bank password");
             sc.nextLine();
-            String passkey=sc.nextLine();
+            String unsecuredpass = sc.nextLine();
+            String passkey = securityutil.hashPassword( unsecuredpass,accountnumber);
+
+            
             if(user.checkpassword(passkey)) {
 
                 System.out.println("enter action 1.withdrawal 2.deposit 3.checkbalance 4.talk to support bot");
@@ -25,7 +28,11 @@ public class Main {
                     case 1:
                         System.out.println("enter withdrawal amount");
                         int amount = sc.nextInt();
-                        user.withdraw(amount);
+                        System.out.println((" done new balance   "+user.getbankbalance()));
+                        try{user.withdraw(amount);}
+                          catch(Fundsexception e){e.Getmessage();};
+
+
                         break;
                     case 2:
                         System.out.println("enter deposit amount");
@@ -56,9 +63,10 @@ public class Main {
                 String bankname = sc.next();
                 System.out.println("enter bankbalance");
                 double bankbalance = sc.nextDouble();
-            System.out.println("enter bank passeword");
+            System.out.println("enter bank password");
             sc.nextLine();
-            String password = sc.nextLine();
+            String unsecuredpass = sc.nextLine();
+            String password = securityutil.hashPassword( unsecuredpass,accountnumber);
 
                 Bankaccount user= new Bankaccount(bankbalance,bankname,accountnumber,password);
                 user1.addbankaccount(user);

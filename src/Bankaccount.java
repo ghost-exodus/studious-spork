@@ -8,6 +8,7 @@ public class Bankaccount {
         return bankbalance;
     }
 
+
     Bankaccount(double bankbalance, String bankname, long bankaccountnumber, String  password ) {
         this.bankbalance = bankbalance;
         this.bankname = bankname;
@@ -25,12 +26,12 @@ public class Bankaccount {
     public void deposit(long amount){
         this.bankbalance += amount;
     }
-    public void withdraw(long amount){
+    public void withdraw(long amount) throws Fundsexception {
         if(this.bankbalance >= amount){
             this.bankbalance -= amount;
         }
         else{
-                System.out.println("Insufficient balance");
+                throw new Fundsexception("Insufficient Funds");
 
 
         }
