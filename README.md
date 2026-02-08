@@ -1,6 +1,4 @@
-Here is a cleaner, punchier version. It cuts the fluff and focuses on what the code actually does.
 
----
 
 # SecureVault
 
