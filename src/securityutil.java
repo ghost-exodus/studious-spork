@@ -1,7 +1,7 @@
 import java.util.Base64;
 public class securityutil
 {
-        public static String hashPassword(String password,long salt)
+        public static String hashPassword(String password,String salt)
         {
             String salting = String.valueOf(salt);
             String combined = salting + password;

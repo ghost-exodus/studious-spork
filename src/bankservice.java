@@ -1,19 +1,23 @@
 import java.util.HashMap;
 public class bankservice {
-    public HashMap<Long, Bankaccount> bankaccounts= new HashMap<>();
-    public void addbankaccount(Bankaccount user1){
-        bankaccounts.put(user1.getBankaccountnumber() ,user1);
+    public HashMap<String, User> Users= new HashMap<>();
+    public void addUser(User user1){
+        Users.put(user1.username,user1);
+
+        }
+
+
+
+
+    public User getUser(String username){
+        return Users.get(username);
 
     }
-    public Bankaccount getBankaccount(long accountnumber){
-        return bankaccounts.get(accountnumber);
-
-    }
-    public boolean checkbankaccount(long user1){
-        return bankaccounts.containsKey(user1);
+    public boolean checkUser(String username){
+        return Users.containsKey(username);
     }
 
-    }
+    };
 
 
 
