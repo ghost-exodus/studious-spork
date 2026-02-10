@@ -1,20 +1,23 @@
 import java.util.Base64;
 public class Bankaccount {
     private double bankbalance;
+    private String banktype;
     private String bankname;
     public long bankaccountnumber;
-    private String password;
+
     public double  getbankbalance() {
         return bankbalance;
     }
 
 
-    Bankaccount(double bankbalance, String bankname, long bankaccountnumber, String  password ) {
+    Bankaccount(double bankbalance, String bankname, long bankaccountnumber , String banktype) {
         this.bankbalance = bankbalance;
         this.bankname = bankname;
         this.bankaccountnumber = bankaccountnumber;
-        this.password = password;
+        this.banktype = banktype;
+
     }
+    public String getbanktype(){return this.banktype;}
 
     public long getBankaccountnumber() {
         return bankaccountnumber;
@@ -36,8 +39,6 @@ public class Bankaccount {
 
         }
     }
-    public boolean checkpassword(String password){
-        return  this.password.equals(password);
 
     }
 
@@ -46,4 +47,3 @@ public class Bankaccount {
 
 
 
-}

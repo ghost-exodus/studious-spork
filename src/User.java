@@ -11,15 +11,19 @@ public class User {
         this.Useraccountlist = new ArrayList<>();
 
     }
+    public String getUsername(){
+        return this.username;
+    }
 
 
     public void addBankaccount(Bankaccount User1) {
         Useraccountlist.add(User1);
     }
 
-    public ArrayList<Bankaccount> Getbankaccount() {
+    public ArrayList<Bankaccount> Getbankaccountlist() {
         return this.Useraccountlist;
     }
+
 
     Boolean checkPassword(String password) {
          return this.SecurityHash.equals(securityutil.hashPassword(password, username));
