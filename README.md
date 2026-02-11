@@ -64,4 +64,3 @@ Unlike basic banking scripts, this project implements a strict **Layered Archite
     * **Transact:** Deposit, Withdraw, or Check Balance.
 
 ---
-*Developed by [Your Name] - Backend Engineering Portfolio*
