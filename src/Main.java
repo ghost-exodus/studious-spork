@@ -8,7 +8,6 @@ public class Main {
         while(true){
             welcome(mybank);
         }
-
         }
         static void welcome(bankservice bankserviceuser1){
 
@@ -18,22 +17,26 @@ public class Main {
         if(bankserviceuser1.checkUser(username)){
             User user= bankserviceuser1.getUser(username);
             System.out.println("Welcome     "+user.getUsername()+"   enter bank password");
-            //scanner bug removed
-            sc.nextLine();
-            String unsecuredpass = sc.nextLine();
-            String passkey = securityutil.hashPassword( unsecuredpass,username);
+            String passkey = sc.nextLine();
 
             //lisitng of accounts
             if(user.checkPassword(passkey)) {
                  ArrayList<Bankaccount> Useraccountlist= user.Getbankaccountlist();
+                System.out.println("your accounts are ");
                  for(int i=0;i<Useraccountlist.size();i++){
-                     System.out.println("your accounts are ");
+
                      Bankaccount acc= Useraccountlist.get(i);
-                     System.out.println(i+1 +"  "+ acc.getbanktype()+"  "+acc.getBankaccountnumber());
+                     System.out.println(i+1 +"  "+ acc.getbanktype()+"  "+acc.getBankname()+"  "+acc.getBankaccountnumber());
+
                  }
+
                 System.out.println("choose your account no (eg: 1)");
-                 int accountlistedno =sc.nextInt();
-                 Bankaccount selectedaccount = Useraccountlist.get(accountlistedno-1);
+                System.out.println("or choose "+(Useraccountlist.size()+1)+"to create a new account  " );
+
+
+                int accountlistedno =sc.nextInt();
+                if(accountlistedno!=Useraccountlist.size()+1){
+                Bankaccount selectedaccount = Useraccountlist.get(accountlistedno-1);
                 System.out.println("choosen bankaccount "+selectedaccount.getbanktype());
 
 
@@ -56,6 +59,7 @@ public class Main {
                         System.out.println("enter deposit amount");
                         int amount1 = sc.nextInt();
                         selectedaccount.deposit(amount1);
+                        System.out.println((" done new balance   "+selectedaccount.getbankbalance()));
                         break;
                     case 3:
                         System.out.println("checkbalance amount");
@@ -68,27 +72,46 @@ public class Main {
                         System.out.println("invalid choice");
 
 
-                }
-            } else{
-                System.out.println("invalid password");
+                }}//new account generation
+                else{
+                        sc.nextLine();
+                        System.out.println("enter banktype  name ");
+                        String banktype = sc.nextLine();
 
+                        System.out.println("enter bank company name");
+                        String bankcompanyname = sc.nextLine();
+                        System.out.println("enter bankbalance");
+                        double bankbalance = sc.nextDouble();
+
+
+                        SecureRandom secRand = new SecureRandom();
+                        int accountnumber = secRand.nextInt(10000,99000);
+
+                        Bankaccount newaccount= new Bankaccount(bankbalance, bankcompanyname,accountnumber,banktype);
+                        user.addBankaccount(newaccount);
+                        bankserviceuser1.addUser(user);
+                        sc.nextLine();
+
+
+                    }
+
+
+            }
+            else{
+                System.out.println("invalid password");
             }
 
         }// new user generation
         else{
 
                 System.out.println("new user detected  enter new password");
-
-                sc.nextLine();
                 String enterpassword = sc.nextLine();
                 String password = securityutil.hashPassword( enterpassword,username);
                 User user= new User(username,password);
-                System.out.println("enter bank name ");
-                sc.nextLine();
+                System.out.println("enter banktype  name ");
                 String banktype = sc.nextLine();
-                System.out.println("enter bank name");
-                sc.nextLine();
-                String bankcompanyname = sc.next();
+                System.out.println("enter bank company name");
+                String bankcompanyname = sc.nextLine();
                 System.out.println("enter bankbalance");
                 double bankbalance = sc.nextDouble();
 
@@ -99,6 +122,7 @@ public class Main {
                 Bankaccount newaccount= new Bankaccount(bankbalance, bankcompanyname,accountnumber,banktype);
                 user.addBankaccount(newaccount);
                 bankserviceuser1.addUser(user);
+                sc.nextLine();
 
             }
 

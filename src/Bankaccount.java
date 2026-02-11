@@ -17,6 +17,7 @@ public class Bankaccount {
         this.banktype = banktype;
 
     }
+    public String getbankname(){return this.bankname;};
     public String getbanktype(){return this.banktype;}
 
     public long getBankaccountnumber() {
