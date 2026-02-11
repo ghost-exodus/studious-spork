@@ -1,43 +1,85 @@
+SecureVault (Pepo Bank) - Advanced Console Banking System
+SecureVault is a Java-based banking application re-engineered to demonstrate Enterprise Backend Architecture.
 
+Unlike basic banking scripts, this project implements a strict Layered Architecture, separating User Identity from Financial Assets. It features a robust One-to-Many relationship model (One User -> Multiple Accounts) and a custom security layer.
 
-# SecureVault
+🚀 Key Features
+Layered Identity Management:
 
-**SecureVault** is a console-based banking system built to practice real backend security and architecture concepts in Java.
+User Layer: Manages authentication (Username/Password) and owns the portfolio.
 
-Most beginner projects store passwords as plain text. This project implements a **Salted Hashing** system from scratch to simulate how real databases protect user credentials. It separates the "Business Logic" (money) from the "Interface" (console), following clean coding principles.
+Account Layer: Manages financial data (Balance, Type, Transactions).
 
-## ⚡ What It Does
+Relationship: Implements a 1:N (One-to-Many) relationship, allowing a single user to open and manage multiple accounts (Savings, Current, etc.) simultaneously.
 
-* **Secure Authentication:** Passwords are never stored directly. The system combines your password with your unique Account ID (the "Salt") and scrambles it using Base64 encoding. Even if two users have the password `12345`, their stored hashes will look completely different.
-* **Smart Error Handling:** Instead of crashing or printing generic errors, the system throws a custom `FundsException` when a user tries to overdraw, allowing the main program to handle the error gracefully.
-* **Instant Lookup:** Uses a `HashMap` structure to simulate a high-speed database for retrieving account details.
+Secure Authentication (Zero-Knowledge):
 
-## 🛠 Project Structure
+Passwords are salted using the unique username and hashed via Base64 encoding before storage.
 
-* **`Main.java`**: The user interface. Handles inputs and displays menus.
-* **`BankService.java`**: The "Database Manager." Stores and retrieves accounts.
-* **`Bankaccount.java`**: The core logic. Handles balances, deposits, and withdrawals.
-* **`SecurityUtils.java`**: The encryption engine. Handles the salting and hashing logic.
-* **`FundsException.java`**: A custom exception class for banking-specific errors.
+Raw passwords are never stored in the database.
 
-## 🚀 How to Run
+Login flow verifies the hash of the input against the stored hash.
 
-1. Compile the project:
-```bash
+Interactive Session Management:
+
+Dynamic Account Selection: Users can view their entire portfolio and select specific accounts to operate on.
+
+In-Memory Persistence: A central BankService acts as the database, maintaining state for all users and their linked accounts during runtime.
+
+🛠 Tech Stack & Concepts
+Language: Java (JDK 17+)
+
+Architecture: Layered (Controller -> Service -> Model)
+
+Core Concepts:
+
+Encapsulation: Strict access control for account balances.
+
+Polymorphism: Scalable account types (Savings/Current).
+
+Exception Handling: Custom FundsException for business logic errors.
+
+Collections: Heavy use of ArrayList and HashMap for data management.
+
+📂 Project Structure
+Main.java (The Controller): Handles user input, login flow, and the "Account Selector" menu.
+
+BankService.java (The Database): A centralized service that maps String username -> User objects.
+
+User.java (The Identity Model): The "Owner" class. Holds the password hash and a List<Bankaccount>.
+
+Bankaccount.java (The Asset Model): The "Product" class. Holds the balance, account number, and bank type.
+
+SecurityUtils.java (The Guard): Handles the SHA-simulation and salting logic.
+
+🗺️ Roadmap & Status
+[x] Core Security: Salted Password Hashing.
+
+[x] Architecture Refactor: Split User from Account.
+
+[x] Scalability: Implemented ArrayList for multi-account support.
+
+[x] User Interface: Added "Account Selector" menu (Choice 1...N).
+
+[ ] Transfer System: Peer-to-Peer money transfer (In Progress).
+
+[ ] Data Persistence: File I/O to save data after exit.
+
+⚡ How to Run
+Compile the project:
+
+Bash
 javac Main.java
+Run the application:
 
-```
-
-
-2. Run the application:
-```bash
+Bash
 java Main
+Flow:
 
-```
+Register: Create a username and your first account.
 
+Login: Enter credentials.
 
-3. Follow the prompts to register a new account or log in with existing credentials.
+Select: Choose an existing account OR select the option to Open a New Account.
 
----
-
-*Built to demonstrate Core Java, OOP, and Backend Security fundamentals.*
+Transact: Deposit, Withdraw, or Check Balance.
